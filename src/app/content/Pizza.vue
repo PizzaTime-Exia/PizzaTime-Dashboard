@@ -64,23 +64,20 @@
 
 <script>
 import _ from 'lazy.js';
-import axios from './services/axios';
-import PizzaService from './services/pizza';
-import BaseService from './services/base';
+import axios from 'axios';
+import api from './../services/api';
+import PizzaService from './../services/pizza';
+import BaseService from './../services/base';
 
 export default {
   name: 'Pizza',
+  created() {
+    this.fetchAll();
+  },
   data() {
     return {
-      pizzas: [
-        {id: 1, name: 'Pizza1', base: {id: 1, name: 'Tomate'}, price: 5.5},
-        {id: 2, name: 'Pizza2', base: {id: 2, name: 'Crème'}, price: 5.5},
-        {id: 3, name: 'Pizza3', base: {id: 1, name: 'Tomate'}, price: 6.5},
-      ],
-      bases: [
-        {id: 1, name: 'Tomate'},
-        {id: 2, name: 'Crème'}
-      ],
+      pizzas: [],
+      bases: [],
       create: {
         name: '',
         base: 1,
@@ -106,9 +103,6 @@ export default {
         .create(this.create)
         .then(x => {
           alert('Pizza ajoutée !');
-          this.create.name = '';
-          this.create.base = 1;
-          this.create.price = 5.5;
           fetchAll();
         });
     },
@@ -121,10 +115,6 @@ export default {
         .update(this.update.id, this.update)
         .then(x => {
           alert('Pizza modifiée !');
-          this.update.id = 1;
-          this.update.name = '';
-          this.update.base = 1;
-          this.update.price = 0;
           fetchAll();
         });
     },
@@ -134,16 +124,20 @@ export default {
         .delete(this.remove.id)
         .then(x => {
           alert('Pizza supprimée !');
-          this.remove.id = 1;
           fetchAll();
         });
     },
     fetchAll() {
       axios
         .all([PizzaService.fetchAll(), BaseService.fetchAll()])
-        .then(axios.spread(function (pizzas, bases) {
-          this.pizzas = pizzas;
-          this.bases = bases;
+        .then(axios.spread((pizzas, bases) => {
+          this.pizzas = pizzas.data;
+          this.bases = bases.data;
+          if (this.pizzas.length > 0) {
+            this.update.id = 1;
+            this.updateSelectionChanged();
+            this.remove.id = 1;
+          }
         }));
     },
     updateSelectionChanged() {

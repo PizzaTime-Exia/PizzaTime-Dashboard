@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import api from './services/api';
 import Header from './Header.vue';
 import Menu from './Menu.vue';
 import Footer from './Footer.vue';
@@ -19,7 +20,10 @@ export default {
   components: {
     'header-component': Header,
     'menu-component': Menu,
-    'footer-component': Footer
+    'footer-component': Footer,
+  },
+  created() {
+    api.get('/').catch(() => alert('API indisponible pour le moment'));
   }
 };
 </script>

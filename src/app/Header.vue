@@ -1,7 +1,9 @@
 <template>
   <header>
     <div class="mui-appbar header">
-      <div class="header-title">Pizza Time</div>
+      <div class="header-title">
+        <a href="/dashboard">Pizza Time</a>
+      </div>
     </div>
   </header>
 </template>

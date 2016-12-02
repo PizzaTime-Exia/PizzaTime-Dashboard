@@ -45,16 +45,16 @@
 
 <script>
 import _ from 'lazy.js';
-import BaseService from './services/base';
+import BaseService from './../services/base';
 
 export default {
   name: 'Base',
+  created() {
+    this.fetchAll();
+  },
   data() {
     return {
-      bases: [
-        {id: 1, name: 'Tomate'},
-        {id: 2, name: 'Crème'}
-      ],
+      bases: [],
       create: {
         name: ''
       },
@@ -99,25 +99,14 @@ export default {
     fetchAll() {
       BaseService
         .fetchAll()
-        .then(x => {
-          this.bases = x;
+        .then(bases => {
+          this.bases = bases.data;
           this.create.name = '';
           if (this.bases.length > 0) {
-            this.update.id = 1;
-            updateSelectionChanged();
-            this.remove.id = 1;
-          } else {
-            this.update.id = -1;
-            this.update.name = '';
-            this.remove.id = -1;
+            this.update.id = this.bases[0].id;
+            this.update.name = this.bases[0].name
+            this.remove.id = this.bases[0].id;
           }
-        })
-        .catch(x => {
-          this.bases = [];
-          this.create.name = '';
-          this.update.id = -1;
-          this.update.name = '';
-          this.remove.id = -1;
         });
     },
     updateSelectionChanged() {
