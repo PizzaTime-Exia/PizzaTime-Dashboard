@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import BenefitsChart from './charts/Benefits'
+import BenefitsChart from './charts/benefits'
 
 export default {
   name: 'Dashboard',
