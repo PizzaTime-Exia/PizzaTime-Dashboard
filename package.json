@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "axios": "^0.15.3",
+    "lazy.js": "^0.4.2",
     "vue": "^2.0.0-rc.6",
-    "vue-router": "^2.0.0-rc.5",
-    "vue-resource": "^0.9.3"
+    "vue-chartjs": "^2.2.0",
+    "vue-resource": "^0.9.3",
+    "vue-router": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "del": "^2.0.2",

@@ -1,12 +1,10 @@
 <template>
   <div class="menu">
-    <div>
-      <ul class="menu-items">
-        <li class="menu-item" v-for="item in items" v-bind:class="{ 'selected': item.isSelected }">
-          <a v-bind:href="item.route">{{ item.title }}</a>
-        </li>
-      </ul>
-    </div>
+    <ul class="menu-items">
+      <li class="menu-item" v-for="item in items" v-bind:class="{ 'selected': ($route.fullPath === item.route) }">
+        <router-link :to="{ path: item.route }">{{ item.title }}</router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -16,20 +14,12 @@ export default {
   data() {
     return {
       items: [
-        {title: 'Dashboard', icon: '', route: '/', isSelected: true},
-        {title: 'Orders', icon: '', route: '/orders', isSelected: false},
-        {title: 'Pizzas', icon: '', route: '/pizzas', isSelected: false},
-        {title: 'Bases', icon: '', route: '/bases', isSelected: false}
+        {title: 'Dashboard', route: '/dashboard', isSelected: true},
+        {title: 'Commandes', route: '/orders', isSelected: false},
+        {title: 'Pizzas', route: '/pizzas', isSelected: false},
+        {title: 'Bases', route: '/bases', isSelected: false}
       ]
     };
-  },
-  methods: {
-    go(item) {
-
-    },
-    select(item) {
-      
-    }
   }
 };
 </script>

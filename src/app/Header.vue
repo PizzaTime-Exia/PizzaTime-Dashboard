@@ -1,12 +1,7 @@
 <template>
   <header>
-    <div class="mui-appbar">
-      <table width="100%">
-        <tr style="vertical-align:middle;">
-          <td class="mui--appbar-height">Pizza Time</td>
-          <td class="mui--appbar-height" align="right">Icons</td>
-        </tr>
-      </table>
+    <div class="mui-appbar header">
+      <div class="header-title">Pizza Time</div>
     </div>
   </header>
 </template>

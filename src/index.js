@@ -1,5 +1,9 @@
 import Vue from 'vue';
 import Main from './app/Main.vue';
+import Dashboard from './app/content/Dashboard.vue';
+import Order from './app/content/Order.vue';
+import Pizza from './app/content/Pizza.vue';
+import Base from './app/content/Base.vue';
 
 import './index.css';
 import VueRouter from 'vue-router';
@@ -10,9 +14,29 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      components: {
-        default: Main
-      }
+      component: Main,
+      children: [
+        {
+          path: '',
+          component: Dashboard
+        },
+        {
+          path: 'dashboard',
+          component: Dashboard
+        },
+        {
+          path: 'orders',
+          component: Order
+        },
+        {
+          path: 'pizzas',
+          component: Pizza
+        },
+        {
+          path: 'bases',
+          component: Base
+        }
+      ]
     }
   ]
 });
