@@ -22,6 +22,11 @@ a:hover {
   color: #5aadbb;
 }
 
+.menu-item span {
+  color: white;
+  text-decoration-style: none;
+}
+
 .main-container, .main-row {
   height: 100%;
   padding-left: 0;
