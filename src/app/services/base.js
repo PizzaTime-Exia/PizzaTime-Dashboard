@@ -2,8 +2,7 @@ import api from './api';
 
 class BaseService {
   static fetchAll() {
-    return api
-      .get(`/bases`);
+    return api.get(`/bases`);
   }
 
   static fetch(baseId) {

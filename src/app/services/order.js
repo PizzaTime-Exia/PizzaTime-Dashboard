@@ -5,10 +5,6 @@ class OrderService {
     return api.get(`/orders`);
   }
 
-  static fetch(userId) {
-    return api.get(`/users/${userId}/orders`);
-  }
-
   static setPaid(orderId) {
     return api.patch(`/orders/${orderId}`, {paid: true});
   }

@@ -21,7 +21,7 @@ CSV</button></th>
               <table>
                 <tbody>
                   <tr v-for="item in order.items">
-                    <td>{{ item.pizza.name }} ({{ item.pizza.base.name }})</td>
+                    <td>{{ item.pizza.name }} ({{ item.base.name }})</td>
                   </tr>
                 </tbody>
               </table>
@@ -51,6 +51,9 @@ import FileSaver from 'file-saverjs';
 import CSV from './../services/csv';
 import api from './../services/api';
 import OrderService from './../services/order';
+import PizzaService from './services/pizza';
+import BaseService from './services/base';
+import Order from './Order';
 
 export default {
   name: 'Order',
@@ -80,12 +83,24 @@ export default {
       axios.all(promises).then(() => order.delivered = true);
     },
     fetchAll() {
-      OrderService
-        .fetchAll()
-        .then(x => {
-          console.log(x.data);
-          this.orders = _(x.data).toArray();
-        });
+      axios
+        .all([BaseService.fetchAll(), PizzaService.fetchAll(), OrderService.fetchAll()])
+        .then(axios.spread((bases, pizzas, orders) => {
+          bases = bases.data;
+          pizzas = pizzas.data;
+          orders.data.forEach(orderData => {
+            const order = new Order(orderData.user);
+            this.orders.push(order);
+            order.id = orderData.id;
+            order.delivered = orderData.delivered;
+            order.paid = orderData.paid;
+            orderData.items.forEach(item => {
+              const pizza = _(pizzas).find(x => x.id === item.pizzaId);
+              const base = _(bases).find(x => x.id === item.baseId);
+              order.add(pizza, base);
+            });
+          });
+        }));
     },
     generateCSV() {
       let items = [
