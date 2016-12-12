@@ -1,5 +1,6 @@
 {
     "api": {
-        "url": "http://api.pizzatime.ovh/"
+        "url": "http://api.pizzatime.ovh/",
+        "token": ""
     } 
 }
