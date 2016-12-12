@@ -23,6 +23,7 @@ export default {
     'footer-component': Footer,
   },
   created() {
+    this.$router.push('/dashboard');
     api.get('/').catch(() => alert('API indisponible pour le moment'));
   }
 };
