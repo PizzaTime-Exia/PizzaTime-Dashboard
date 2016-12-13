@@ -10,8 +10,18 @@
             <th>Prix</th>
             <th>Payé</th>
             <th>Livré</th>
-            <th><button class="mui-btn mui-btn--small mui-btn--primary mui-btn--flat" v-on:click="generateCSV()"><i class="fa fa-download" aria-hidden="true"></i>
-CSV</button></th>
+            <th>
+              <button v-if="!areOrdersLocked" class="mui-btn mui-btn--small mui-btn--primary" v-on:click="lockOrders()">
+                <i class="fa fa-unlock-alt" aria-hidden="true"></i>Vérouiller les commandes
+              </button>
+              <button v-if="areOrdersLocked" class="mui-btn mui-btn--small mui-btn--danger" v-on:click="unlockOrders()">
+                <i class="fa fa-lock" aria-hidden="true"></i>Commandes vérouillées
+              </button>
+              &nbsp;
+              <button class="mui-btn mui-btn--small mui-btn--primary" v-on:click="generateCSV()">
+                <i class="fa fa-download" aria-hidden="true"></i>CSV
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -53,6 +63,7 @@ import api from './../services/api';
 import OrderService from './../services/order';
 import PizzaService from './services/pizza';
 import BaseService from './services/base';
+import ConfigService from './services/end_date';
 import Order from './Order';
 
 export default {
@@ -62,7 +73,8 @@ export default {
   },
   data() {
     return {
-      orders: []
+      orders: [],
+      areOrdersLocked: false
     }
   },
   methods: {
@@ -70,25 +82,25 @@ export default {
       if (!confirm(`${order.user.name} a-t-il payé sa commande?`)) {
         return;
       }
-      const promises = [];
-      order.items.forEach(x => promises.push(OrderService.setPaid(x.id)));
-      axios.all(promises).then(() => order.paid = true);
+      OrderService
+        .setPaid(this.order.id)
+        .then(() => this.order.paid = true);
     },
     setDelivered(order) {
       if (!confirm(`La commande de ${order.user.name} a-t-elle été délivrée?`)) {
         return;
       }
-      const promises = [];
-      order.items.forEach(x => promises.push(OrderService.setDelivered(x.id)));
-      axios.all(promises).then(() => order.delivered = true);
+      OrderService
+        .setDelivered(this.order.id)
+        .then(() => this.order.delivered = true);
     },
     fetchAll() {
       axios
         .all([BaseService.fetchAll(), PizzaService.fetchAll(), OrderService.fetchAll()])
-        .then(axios.spread((bases, pizzas, orders) => {
-          bases = bases.data;
-          pizzas = pizzas.data;
-          orders.data.forEach(orderData => {
+        .then(axios.spread((basesResponse, pizzasResponse, ordersResponse) => {
+          bases = basesResponse.data;
+          pizzas = pizzasResponse.data;
+          ordersResponse.data.forEach(orderData => {
             const order = new Order(orderData.user);
             this.orders.push(order);
             order.id = orderData.id;
@@ -115,6 +127,24 @@ export default {
       const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
       FileSaver(blob, 'commandes.csv');
     }
+  },
+  lockOrders() {
+    if (confirm('Voulez vous vraiment vérouiller les commandes?')) {
+      this.areOrdersLocked = true;
+      var date = this.getNextDate(new Date(), 5); // Next friday
+      ConfigService.updateEndDate(date);
+    }
+  },
+  unlockOrders() {
+    alter('Action impossible.')
+  },
+  getNextDate(date, day) {
+    var next = new Date(date.getTime ());
+    next.setDate(date.getDate() + (dayOfWeek + 7 - date.getDay()) % 7);
+    if (date.getDate() === next.getDate()) {
+      next.setDate(date.getDate() + 7);
+    }
+    return next;
   }
 };
 </script>
