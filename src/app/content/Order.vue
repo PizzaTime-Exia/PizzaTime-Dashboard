@@ -12,10 +12,10 @@
             <th>Livré</th>
             <th>
               <button v-if="!areOrdersLocked" class="mui-btn mui-btn--small mui-btn--primary" v-on:click="lockOrders()">
-                <i class="fa fa-unlock-alt" aria-hidden="true"></i>Vérouiller les commandes
+                <i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;Vérouiller les commandes
               </button>
               <button v-if="areOrdersLocked" class="mui-btn mui-btn--small mui-btn--danger" v-on:click="unlockOrders()">
-                <i class="fa fa-lock" aria-hidden="true"></i>Commandes vérouillées
+                <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Commandes vérouillées
               </button>
               &nbsp;
               <button class="mui-btn mui-btn--small mui-btn--primary" v-on:click="generateCSV()">
@@ -98,8 +98,8 @@ export default {
       axios
         .all([BaseService.fetchAll(), PizzaService.fetchAll(), OrderService.fetchAll()])
         .then(axios.spread((basesResponse, pizzasResponse, ordersResponse) => {
-          bases = basesResponse.data;
-          pizzas = pizzasResponse.data;
+          const bases = basesResponse.data;
+          const pizzas = pizzasResponse.data;
           ordersResponse.data.forEach(orderData => {
             const order = new Order(orderData.user);
             this.orders.push(order);
