@@ -61,10 +61,10 @@ import FileSaver from 'file-saverjs';
 import CSV from './../services/csv';
 import api from './../services/api';
 import OrderService from './../services/order';
-import PizzaService from './services/pizza';
-import BaseService from './services/base';
-import ConfigService from './services/end_date';
-import Order from './Order';
+import PizzaService from './../services/pizza';
+import BaseService from './../services/base';
+import ConfigService from './../services/config';
+import Order from './../Order';
 
 export default {
   name: 'Order',
