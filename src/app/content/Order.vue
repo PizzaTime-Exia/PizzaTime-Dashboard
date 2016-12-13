@@ -102,7 +102,7 @@ export default {
             order.id = orderData.id;
             order.delivered = orderData.delivered;
             order.paid = orderData.paid;
-            order.date = Date.parse(orderData.date);
+            order.date = new Date(Date.parse(orderData.date));
             orderData.items.forEach(item => {
               const pizza = _(pizzas).find(x => x.id === item.pizzaId);
               const base = _(bases).find(x => x.id === item.baseId);

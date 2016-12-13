@@ -9,6 +9,7 @@ class Order {
     this.items = [];
     this.delivred = false;
     this.paid = false;
+    this.date = new Date();
   }
 
   get isEmpty() {
