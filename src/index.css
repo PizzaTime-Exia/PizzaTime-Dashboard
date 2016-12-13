@@ -119,3 +119,9 @@ main {
 .order-button {
   width: 106px;
 }
+
+.mui-select .mui-select__menu {
+  max-height: 330px;
+  overflow: auto;
+}
+

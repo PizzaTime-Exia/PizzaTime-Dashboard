@@ -11,10 +11,12 @@
           <div class="mui-textfield">
             <input type="text" placeholder="Nom" v-model="create.name">
           </div>
+          <div class="mui-textfield">
+            <input type="text" placeholder="Description" v-model="create.description">
+          </div>
           <div class="mui-select">
-            <select>
-              <option>Tomate</option>
-              <option>Crème</option>
+            <select v-model="create.base">
+              <option v-for="base in bases" v-bind:value="base.id">{{ base.name }}</option>
             </select>
             <label>Base</label>
           </div>
@@ -34,6 +36,9 @@
           </div>
           <div class="mui-textfield">
             <input type="text" placeholder="Nom" v-model="update.name">
+          </div>
+          <div class="mui-textfield">
+            <input type="text" placeholder="Description" v-model="update.description">
           </div>
           <div class="mui-select">
             <select v-model="update.base">
@@ -96,9 +101,9 @@ export default {
   },
   methods: {
     createPizza() {
-      if (this.create.name === '')  return;
-      if (this.create.base < 0)     return;
-      if (this.create.price < 0)    return;
+      if (this.create.name === '')        return;
+      if (this.create.base === undefined) return;
+      if (this.create.price < 0)          return;
       PizzaService
         .create(this.create)
         .then(x => {
@@ -107,10 +112,10 @@ export default {
         });
     },
     updatePizza() {
-      if (this.update.id < 1)       return;
-      if (this.update.name === '')  return;
-      if (this.update.base < 0)     return;
-      if (this.update.price < 0)    return;
+      if (this.update.id < 1)             return;
+      if (this.update.name === '')        return;
+      if (this.update.base === undefined) return;
+      if (this.update.price < 0)          return;
       PizzaService
         .update(this.update.id, this.update)
         .then(x => {
