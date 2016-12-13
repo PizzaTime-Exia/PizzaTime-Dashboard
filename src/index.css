@@ -54,7 +54,7 @@ main {
 
 .menu {
   height: 100%;
-  width: 110px;
+  width: 120px;
   background-color: #33302e;
   float: left;
 }
@@ -102,8 +102,8 @@ main {
 
 .content {
   height: 100%;
-  width: calc(100% - 110px);
-  margin-left: 110px;
+  width: calc(100% - 120px);
+  margin-left: 120px;
 }
 
 .mui-btn--true {

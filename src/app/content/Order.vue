@@ -8,8 +8,6 @@
             <th>Contenu</th>
             <th>Date</th>
             <th>Prix</th>
-            <th>Payé</th>
-            <th>Livré</th>
             <th>
               <button v-if="!areOrdersLocked" class="mui-btn mui-btn--small mui-btn--primary" v-on:click="lockOrders()">
                 <i class="fa fa-unlock-alt" aria-hidden="true"></i>&nbsp;Vérouiller les commandes
@@ -19,7 +17,7 @@
               </button>
               &nbsp;
               <button class="mui-btn mui-btn--small mui-btn--primary" v-on:click="generateCSV()">
-                <i class="fa fa-download" aria-hidden="true"></i>CSV
+                <i class="fa fa-download" aria-hidden="true"></i>&nbsp;CSV
               </button>
             </th>
           </tr>
@@ -36,15 +34,13 @@
                 </tbody>
               </table>
             </td>
-            <td>{{ order.date }}</td>            
+            <td>{{ order.date.toLocaleDateString() }}</td>            
             <td>{{ order.price }}€</td>
             <td>
               <button :class="['order-button', 'mui-btn', 'mui-btn--small', order.paid ? 'mui-btn--true' : 'mui-btn--false']" v-on:click="setPaid(order)">{{ order.paid ? 'Payé' : 'Non payé' }}</button>
-              </td>
-            <td>
+              &nbsp;
               <button :class="['order-button', 'mui-btn', 'mui-btn--small', order.delivered ? 'mui-btn--true' : 'mui-btn--false']" v-on:click="setDelivered(order)">{{ order.delivered ? 'Livré' : 'Non livré' }}</button>
-            </td>
-            <td>
+              &nbsp;
               <button class="order-button mui-btn mui-btn--small">Annuler</button>
             </td>
           </tr>
@@ -106,6 +102,7 @@ export default {
             order.id = orderData.id;
             order.delivered = orderData.delivered;
             order.paid = orderData.paid;
+            order.date = Date.parse(orderData.date);
             orderData.items.forEach(item => {
               const pizza = _(pizzas).find(x => x.id === item.pizzaId);
               const base = _(bases).find(x => x.id === item.baseId);
