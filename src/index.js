@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Main from './app/Main.vue';
-import Dashboard from './app/content/Dashboard.vue';
 import Order from './app/content/Order.vue';
 import Pizza from './app/content/Pizza.vue';
 import Base from './app/content/Base.vue';
@@ -18,11 +17,7 @@ const router = new VueRouter({
       children: [
         {
           path: '',
-          component: Dashboard
-        },
-        {
-          path: 'dashboard',
-          component: Dashboard
+          component: Order
         },
         {
           path: 'orders',

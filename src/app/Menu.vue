@@ -14,7 +14,6 @@ export default {
   data() {
     return {
       items: [
-        {title: 'Dashboard', route: '/dashboard'},
         {title: 'Commandes', route: '/orders'},
         {title: 'Pizzas', route: '/pizzas'},
         {title: 'Bases', route: '/bases'}
