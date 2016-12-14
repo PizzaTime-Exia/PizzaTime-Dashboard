@@ -151,7 +151,7 @@ export default {
       this.update.name = pizza.name;
       this.update.base = pizza.base.id;
       this.update.price = pizza.price;
-      this.update.decscription = pizza.description;
+      this.update.description = pizza.description;
     }
   }
 };
