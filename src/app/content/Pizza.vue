@@ -23,7 +23,7 @@
           <div class="mui-textfield">
             <input type="text" placeholder="Prix">
           </div>
-          <button type="submit" class="mui-btn mui-btn--raised" v-on:click="createPizza">Ajouter</button>
+          <button type="button" class="mui-btn mui-btn--raised" v-on:click="createPizza">Ajouter</button>
         </form>
       </div>
       <div class="mui-tabs__pane" id="pane-justified-2">
@@ -49,7 +49,7 @@
           <div class="mui-textfield">
             <input type="text" placeholder="Prix" v-model="update.price">
           </div>
-          <button type="submit" class="mui-btn mui-btn--raised" v-on:click="updatePizza()">Modifier</button>
+          <button type="button" class="mui-btn mui-btn--raised" v-on:click="updatePizza()">Modifier</button>
         </form>
       </div>
       <div class="mui-tabs__pane" id="pane-justified-3">
@@ -60,7 +60,7 @@
             </select>
             <label>Pizza</label>
           </div>
-          <button type="submit" class="mui-btn mui-btn--raised" v-on:click="removePizza()">Supprimer</button>
+          <button type="button" class="mui-btn mui-btn--raised" v-on:click="removePizza()">Supprimer</button>
         </form>
       </div>
     </div>
