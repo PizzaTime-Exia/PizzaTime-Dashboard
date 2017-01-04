@@ -75,20 +75,18 @@ export default {
   },
   methods: {
     setPaid(order) {
-      if (!confirm(`${order.user.name} a-t-il payé sa commande?`)) {
-        return;
+      if (confirm(`${order.user.name} a-t-il payé sa commande?`)) {
+        OrderService
+          .setPaid(order.id)
+          .then(() => order.paid = true);
       }
-      OrderService
-        .setPaid(this.order.id)
-        .then(() => this.order.paid = true);
     },
     setDelivered(order) {
-      if (!confirm(`La commande de ${order.user.name} a-t-elle été délivrée?`)) {
-        return;
+      if (confirm(`La commande de ${order.user.name} a-t-elle été délivrée?`)) {
+        OrderService
+          .setDelivered(order.id)
+          .then(() => order.delivered = true);
       }
-      OrderService
-        .setDelivered(this.order.id)
-        .then(() => this.order.delivered = true);
     },
     fetchAll() {
       axios
